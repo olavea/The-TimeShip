@@ -37,6 +37,13 @@
           <div id="db-loading">Loading location and year...</div>
           <div id="db-error"></div>
 
+          <form id="add-todo-form">
+            <input id="add-year" type="text" required placeholder="Year">
+            <!-- <input id="add-email" type="email" required placeholder="Year"> -->
+            <input type="submit" value="Add">
+          </form>
+          <div id="add-todo-error"></div>
+
       </div>
       <!-- application code -->
         <!-- Is signUp a function from userbase? Yes-->
@@ -77,8 +84,7 @@
                 if (!user.subscriptionStatus) {
                     userbase.purchaseSubscription({ successUrl, cancelUrl })
                     return
-                }
-
+          }
                 document.getElementById('auth-view').style.display = 'none'
                 document.getElementById('todo-view').style.display = 'block'
 
@@ -120,8 +126,20 @@
               }
           }
 
+          function addTodoHandler(e) {
+            e.preventDefault()
+
+            const todo = document.getElementById('add-todo').value
+
+            userbase.insertItem({ databaseName: 'todos', item: { 'todo': todo }})
+              .then(() => document.getElementById('add-year').value = '')
+              .catch((e) => document.getElementById('add-todo-error').innerHTML = e)
+          }
+
           document.getElementById('login-form').addEventListener('submit', handleTimeShipLogin)
           document.getElementById('signup-form').addEventListener('submit', handleTimeShipSignUp)
+          document.getElementById('add-todo-form').addEventListener('submit', addTodoHandler)
+
           document.getElementById('logout-button').addEventListener('click', handleTimeShipLogout)
           document.getElementById('todo-view').style.display = 'none'
         </script>
