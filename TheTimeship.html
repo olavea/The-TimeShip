@@ -26,17 +26,19 @@
           </form>
           <div id="signup-error"></div>
         </div>
-        <!-- Year-Picker View needs some work-->
+        <!-- Add Address View View needs some work-->
         <div id="todo-view">
-            <div id="username"></div>
-            <input type="button" value="Logout" id="logout-button">
-            <div id="logout-error"></div>
+          <div id="username"></div>
+          <input type="button" value="Logout" id="logout-button">
+          <div id="logout-error"></div>
 
-            <h1>Year-Picker Form</h1>
-            <div id="todos"></div>
+          <h1>Add Year & Email Address</h1>
+          <div id="todos"></div>
+          <div id="db-loading">Loading location and year...</div>
+          <div id="db-error"></div>
 
-        </div>
-        <!-- application code -->
+      </div>
+      <!-- application code -->
         <!-- Is signUp a function from userbase? Yes-->
         <script type="text/javascript">
           userbase.init({ appId: '8af6f24a-fcf3-4fa5-9e20-c8fe279c5b5c' })
