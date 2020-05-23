@@ -33,16 +33,16 @@
           <div id="logout-error"></div>
 
           <h1>Add A Go-Year</h1>
-          <div id="goyear"></div>
+          <div id="todos"></div>
           <div id="db-loading">Loading Go-Year...</div>
           <div id="db-error"></div>
 
-          <form id="add-goyear-form">
-            <input id="add-year" type="text" required placeholder="Year">
+          <form id="add-todo-form">
+            <input id="add-year" type="text" required placeholder="Go Year">
             <!-- <input id="add-email" type="email" required placeholder="Year"> -->
             <input type="submit" value="Add">
           </form>
-          <div id="add-goyear-error"></div>
+          <div id="add-todo-error"></div>
 
       </div>
       <!-- application code -->
@@ -81,20 +81,20 @@
                 const successUrl = 'http://localhost:8000/solhauggata'
                 const cancelUrl = 'http://localhost:8008/londonbridge'
 
-                if (!user.subscriptionStatus) {
-                    userbase.purchaseSubscription({ successUrl, cancelUrl })
-                    return
-                }
+                // if (!user.subscriptionStatus) {
+                //     userbase.purchaseSubscription({ successUrl, cancelUrl })
+                //     return
+                // }
                 document.getElementById('auth-view').style.display = 'none'
                 document.getElementById('todo-view').style.display = 'block'
 
                 // reset the Add A Go-Year view
                 document.getElementById('username').innerHTML = username
-                document.getElementById('goyear').innerText = ''
+                document.getElementById('todos').innerText = ''
                 document.getElementById('db-loading').style.display = 'block'
                 document.getElementById('db-error').innerText = ''
 
-                userbase.openDatabase({ databaseName: 'goyear', changeHandler })
+                userbase.openDatabase({ databaseName: 'todos', changeHandler })
                   .catch((e) => document.getElementById('db-error'). innerText = e)
 
 
@@ -102,26 +102,26 @@
           function changeHandler(items) {
               document.getElementById('db-loading').style.display = 'none'
 
-              const goyearthing = document.getElementById('goyear')
+              const todoslist = document.getElementById('todos')
 
               if (items.length === 0) {
-                goyearthing.innerText = 'Empty'
+                todoslist.innerText = 'Empty'
               } else {
-                  // clear the thing
-                  goyearthing.innerHTML = ''
+                  // clear the list
+                  todoslist.innerHTML = ''
 
-                  // render the go-year, do I meed this? I only have ONE item.
+                  // render the go-year, do I need this? I only have ONE item.
                   for (let i = 0; i < items.length; i++) {
 
                     // build the goyear label
-                    const goyearLabel = document.createElement('label')
-                    goyearLabel.innerHTML = items[i].item.todo
-                    goyearLabel.style.textDecoration = items[i].item.complete ? 'line-through' : 'none'
+                    const todoLabel = document.createElement('label')
+                    todoLabel.innerHTML = items[i].item.todo
+                    todoLabel.style.textDecoration = items[i].item.complete ? 'line-through' : 'none'
 
                     // append the todo item to the list
-                    const goyearItem = document.createElement('div')
-                    goyearItem.appendChild(goyearLabel)
-                    goyearthing.appendChild(goyearItem)
+                    const todoItem = document.createElement('div')
+                    todoItem.appendChild(todoLabel)
+                    todoslist.appendChild(todoItem)
                   }
               }
           }
@@ -129,16 +129,16 @@
           function addTodoHandler(e) {
             e.preventDefault()
 
-            const goyear = document.getElementById('add-year').value
+            const todo = document.getElementById('add-year').value
 
-            userbase.insertItem({ databaseName: 'goyear', item: { 'goyear': goyear }})
+            userbase.insertItem({ databaseName: 'todos', item: { 'todo': todo }})
               .then(() => document.getElementById('add-year').value = '')
-              .catch((e) => document.getElementById('add-goyear-error').innerHTML = e)
+              .catch((e) => document.getElementById('add-todo-error').innerHTML = e)
           }
 
           document.getElementById('login-form').addEventListener('submit', handleTimeShipLogin)
           document.getElementById('signup-form').addEventListener('submit', handleTimeShipSignUp)
-          document.getElementById('add-goyear-form').addEventListener('submit', addTodoHandler)
+          document.getElementById('add-todo-form').addEventListener('submit', addTodoHandler)
 
           document.getElementById('logout-button').addEventListener('click', handleTimeShipLogout)
           document.getElementById('todo-view').style.display = 'none'
