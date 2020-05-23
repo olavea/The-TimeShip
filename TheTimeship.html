@@ -26,14 +26,16 @@
           </form>
           <div id="signup-error"></div>
         </div>
-        <!-- Year-Picker View needs some work-->
+        <!-- Add Address View needs some work-->
         <div id="todo-view">
             <div id="username"></div>
             <input type="button" value="Logout" id="logout-button">
             <div id="logout-error"></div>
 
-            <h1>Year-Picker Form</h1>
+            <h1>Add Year & Email Address</h1>
             <div id="todos"></div>
+            <div id="db-loading">Loading location and year...</div>
+            <div id="db-error"></div>
         </div>
         <!-- application code -->
         <!-- Is signUp a function from userbase? Yes-->
@@ -78,6 +80,8 @@
 
                 document.getElementById('auth-view').style.display = 'none'
                 document.getElementById('todo-view').style.display = 'block'
+
+                // Reset the
                 document.getElementById('username').innerHTML = username
           }
           document.getElementById('login-form').addEventListener('submit', handleTimeShipLogin)
