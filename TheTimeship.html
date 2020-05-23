@@ -26,23 +26,23 @@
           </form>
           <div id="signup-error"></div>
         </div>
-        <!-- Add Address View View needs some work-->
+        <!-- Add A Go-Year View needs some work-->
         <div id="todo-view">
           <div id="username"></div>
           <input type="button" value="Logout" id="logout-button">
           <div id="logout-error"></div>
 
-          <h1>Add Year & Email Address</h1>
-          <div id="todos"></div>
-          <div id="db-loading">Loading location and year...</div>
+          <h1>Add A Go-Year</h1>
+          <div id="goyear"></div>
+          <div id="db-loading">Loading Go-Year...</div>
           <div id="db-error"></div>
 
-          <form id="add-todo-form">
+          <form id="add-goyear-form">
             <input id="add-year" type="text" required placeholder="Year">
             <!-- <input id="add-email" type="email" required placeholder="Year"> -->
             <input type="submit" value="Add">
           </form>
-          <div id="add-todo-error"></div>
+          <div id="add-goyear-error"></div>
 
       </div>
       <!-- application code -->
@@ -57,7 +57,7 @@
                 const password = document.getElementById('login-password').value
 
                 userbase.signIn({ username, password, rememberMe: 'none' })
-                .then((user) => showTimeShipTodos(user.username))
+                .then((user) => showTimeShipGoYear(user.username))
                 .catch((e) => document.getElementById('login-error').innerHTML = e)
           }
 
@@ -67,7 +67,7 @@
               const password = document.getElementById('signup-password').value
 
               userbase.signUp({ username, password, rememberMe: 'none' })
-              .then((user) => showTimeShipTodos(user.username))
+              .then((user) => showTimeShipGoYear(user.username))
               .catch((event) => document.getElementById('signup-error').innerHTML = event)
 
           }
@@ -77,24 +77,24 @@
                 .catch((e) => document.getElementById('logout-error').innerText = e)
           }
 
-          function showTimeShipTodos(user) {
-                const successUrl = 'http://localhost:8008/success'
-                const cancelUrl = 'http://localhost:8008/cancel'
+          function showTimeShipGoYear(user) {
+                const successUrl = 'http://localhost:8000/solhauggata'
+                const cancelUrl = 'http://localhost:8008/londonbridge'
 
                 if (!user.subscriptionStatus) {
                     userbase.purchaseSubscription({ successUrl, cancelUrl })
                     return
-          }
+                }
                 document.getElementById('auth-view').style.display = 'none'
                 document.getElementById('todo-view').style.display = 'block'
 
-                // reset the Add Address View view
+                // reset the Add A Go-Year view
                 document.getElementById('username').innerHTML = username
-                document.getElementById('todos').innerText = ''
+                document.getElementById('goyear').innerText = ''
                 document.getElementById('db-loading').style.display = 'block'
                 document.getElementById('db-error').innerText = ''
 
-                userbase.openDatabase({ databaseName: 'todos', changeHandler })
+                userbase.openDatabase({ databaseName: 'goyear', changeHandler })
                   .catch((e) => document.getElementById('db-error'). innerText = e)
 
 
@@ -102,26 +102,26 @@
           function changeHandler(items) {
               document.getElementById('db-loading').style.display = 'none'
 
-              const todoslist = document.getElementById('todos')
+              const goyearthing = document.getElementById('goyear')
 
               if (items.length === 0) {
-                  todoslist.innerText = 'Empty'
+                goyearthing.innerText = 'Empty'
               } else {
-                  // clear the list
-                  todosList.innerHTML = ''
+                  // clear the thing
+                  goyearthing.innerHTML = ''
 
-                  // render all the to-do items
+                  // render the go-year, do I meed this? I only have ONE item.
                   for (let i = 0; i < items.length; i++) {
 
-                    // build the todo label
-                    const todoLabel = document.createElement('label')
-                    todoLabel.innerHTML = items[i].item.todo
-                    todoLabel.style.textDecoration = items[i].item.complete ? 'line-through' : 'none'
+                    // build the goyear label
+                    const goyearLabel = document.createElement('label')
+                    goyearLabel.innerHTML = items[i].item.todo
+                    goyearLabel.style.textDecoration = items[i].item.complete ? 'line-through' : 'none'
 
                     // append the todo item to the list
-                    const todoItem = document.createElement('div')
-                    todoItem.appendChild(todoLabel)
-                    todosList.appendChild(todoItem)
+                    const goyearItem = document.createElement('div')
+                    goyearItem.appendChild(goyearLabel)
+                    goyearthing.appendChild(goyearItem)
                   }
               }
           }
@@ -129,16 +129,16 @@
           function addTodoHandler(e) {
             e.preventDefault()
 
-            const todo = document.getElementById('add-todo').value
+            const goyear = document.getElementById('add-year').value
 
-            userbase.insertItem({ databaseName: 'todos', item: { 'todo': todo }})
+            userbase.insertItem({ databaseName: 'goyear', item: { 'goyear': goyear }})
               .then(() => document.getElementById('add-year').value = '')
-              .catch((e) => document.getElementById('add-todo-error').innerHTML = e)
+              .catch((e) => document.getElementById('add-goyear-error').innerHTML = e)
           }
 
           document.getElementById('login-form').addEventListener('submit', handleTimeShipLogin)
           document.getElementById('signup-form').addEventListener('submit', handleTimeShipSignUp)
-          document.getElementById('add-todo-form').addEventListener('submit', addTodoHandler)
+          document.getElementById('add-goyear-form').addEventListener('submit', addTodoHandler)
 
           document.getElementById('logout-button').addEventListener('click', handleTimeShipLogout)
           document.getElementById('todo-view').style.display = 'none'
@@ -147,5 +147,5 @@
       </html>
 <!--
 I stopped before
-Using the database
+Updating to-dos
         -->
