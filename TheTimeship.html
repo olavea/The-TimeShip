@@ -81,8 +81,30 @@
 
                 document.getElementById('auth-view').style.display = 'none'
                 document.getElementById('todo-view').style.display = 'block'
+
+                // reset the Add Address View view
                 document.getElementById('username').innerHTML = username
+                document.getElementById('todos').innerText = ''
+                document.getElementById('db-loading').style.display = 'block'
+                document.getElementById('db-error').innerText = ''
+
+                userbase.openDatabase({ databaseName: 'todos', changeHandler })
+                  .catch((e) => document.getElementById('db-error'). innerText = e)
+
+
           }
+          function changeHandler(items) {
+              document.getElementById('db-loading').style.display = 'none'
+
+              const todoslist = document.getElementById('todos')
+
+              if (items.length === 0) {
+                  todoslist.innerText = 'Empty'
+              } else {
+                  // render location and time, not yet implemented
+              }
+          }
+
           document.getElementById('login-form').addEventListener('submit', handleTimeShipLogin)
           document.getElementById('signup-form').addEventListener('submit', handleTimeShipSignUp)
           document.getElementById('logout-button').addEventListener('click', handleTimeShipLogout)
