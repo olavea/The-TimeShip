@@ -101,7 +101,22 @@
               if (items.length === 0) {
                   todoslist.innerText = 'Empty'
               } else {
-                  // render location and time, not yet implemented
+                  // clear the list
+                  todosList.innerHTML = ''
+
+                  // render all the to-do items
+                  for (let i = 0; i < items.length; i++) {
+
+                    // build the todo label
+                    const todoLabel = document.createElement('label')
+                    todoLabel.innerHTML = items[i].item.todo
+                    todoLabel.style.textDecoration = items[i].item.complete ? 'line-through' : 'none'
+
+                    // append the todo item to the list
+                    const todoItem = document.createElement('div')
+                    todoItem.appendChild(todoLabel)
+                    todosList.appendChild(todoItem)
+                  }
               }
           }
 
